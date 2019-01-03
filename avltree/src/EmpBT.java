@@ -63,13 +63,8 @@ public class EmpBT {
     int getHeadcount(EmployeeNode emp) {
         if (emp == null)
             return 0;
-
-        int res = 0;
-        if (emp.left != null && emp.right != null)
-            res++;
-
-        res += (getHeadcount(emp.left) + getHeadcount(emp.right));
-        return res;
+        else
+            return(getHeadcount(emp.left) + 1 + getHeadcount(emp.right));
     }
 
     /***
@@ -84,9 +79,9 @@ public class EmpBT {
             if (emp.empId == id)
                 return true;
             else if (id < emp.empId) // Search in left tree
-              searchID(emp.left, id);
+              return searchID(emp.left, id);
             else // Search in right tree
-                searchID(emp.left, id);
+               return searchID(emp.right, id);
         }
         return false;
     }
@@ -104,9 +99,9 @@ public class EmpBT {
             if (emp.empId == id)
                 return emp.attCount;
             else if (id < emp.empId) // Search in left tree
-                searchID(emp.left, id);
+                return howOften(emp.left, id);
             else // Search in right tree
-                searchID(emp.left, id);
+                return howOften(emp.right, id);
         }
         return 0;
     }
@@ -128,9 +123,11 @@ public class EmpBT {
         EmployeeNode leftMaxNode = frequentVisitor(emp.left);
         EmployeeNode rightMaxNode = frequentVisitor(emp.right);
 
-        if (leftMaxNode.getAttCount() > maxNode.getAttCount())
+        if (leftMaxNode == null && rightMaxNode == null)
+            return maxNode;
+        if(leftMaxNode!= null && leftMaxNode.getAttCount() > maxNode.getAttCount())
             maxNode = leftMaxNode;
-        if (rightMaxNode.getAttCount() > maxNode.getAttCount())
+        if (rightMaxNode!= null && rightMaxNode.getAttCount() > maxNode.getAttCount())
             maxNode = rightMaxNode;
         
         return maxNode;

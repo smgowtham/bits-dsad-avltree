@@ -63,18 +63,18 @@ public class EmployeeAttendance {
                     System.out.println("Enter the employee Id to Search:");
                     searchId = getInput();
                     if (employeeTree.searchID(employeeTree.root, searchId))
-                        System.out.println("Employee Id " + searchId + "is Present.");
+                        System.out.println("Employee Id " + searchId + " is Present.");
                     else
-                        System.out.println("Employee Id " + searchId + "is  not Present.");
+                        System.out.println("Employee Id " + searchId + " is  not Present.");
                     break;
                 case 4:
                     System.out.println("Enter the employee Id to search how often:");
                     searchId = getInput();
                     int numberOfTimes = employeeTree.howOften(employeeTree.root, searchId);
                     if (numberOfTimes == 0)
-                        System.out.println("Employee Id " + searchId + "has not entered the org.");
+                        System.out.println("Employee Id " + searchId + " has not entered the org.");
                     else
-                        System.out.println("Employee Id " + searchId + "has entered " + numberOfTimes + " times");
+                        System.out.println("Employee Id " + searchId + " has entered " + numberOfTimes + " times");
                     break;
                 case 5:
                     EmployeeNode frequentVisitor = employeeTree.frequentVisitor(employeeTree.root);
@@ -84,10 +84,10 @@ public class EmployeeAttendance {
                         System.out.println("Frequent visitor employee id " + frequentVisitor.empId + " has entered " + frequentVisitor.attCount + " times");
                     break;
                 case 6:
-                    System.out.println("Not yet implemented:");
+                    System.out.println("Not yet implemented.");
                     break;
                 default:
-                    System.out.println("Invalid Input");
+                    System.out.println("Invalid Input.");
                     break;
                 }
             }// End of try
