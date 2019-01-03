@@ -189,7 +189,8 @@ public class EmpBT {
    
     }
     
-// A utility to find lowerNode
+/*
+    // A utility to find lowerNode
     EmployeeNode lowerNode(EmployeeNode emp, int id )
     {
     	if (emp != null) {
@@ -204,7 +205,7 @@ public class EmpBT {
     
         return emp;
     }
-
+*/
     // A utility function to get the height of the tree 
     int height(EmployeeNode N) {
         if (N == null)
