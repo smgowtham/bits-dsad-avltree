@@ -1,6 +1,13 @@
 public class EmployeeNode {
-    private int empId, attCount;
-    private EmployeeNode left, right;
+    public int empId, attCount;
+    public int height;
+    public EmployeeNode left, right;
+
+    EmployeeNode(int empId) {
+        this.empId = empId;
+        attCount = 1;
+        height = 1;
+    }
 
     public int getAttCount() {
         return attCount;
