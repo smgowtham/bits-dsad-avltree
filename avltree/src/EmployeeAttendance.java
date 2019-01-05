@@ -153,7 +153,7 @@ public class EmployeeAttendance {
     {
         endTime = System.nanoTime();;
 //        System.out.println("Timer completed at:"+ endTime);
-        System.out.println("Time Taken:"+ formatter.format((endTime-startTime)/1000d)+" milliseconds.");
+        System.out.println("Time Taken:"+ formatter.format((endTime-startTime)/1000000d)+" milliseconds.");
     }
         
 }
