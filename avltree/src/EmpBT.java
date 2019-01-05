@@ -15,10 +15,7 @@ public class EmpBT {
      * @return Address of the Root of the balanced BST
      */
     EmployeeNode readEmployees(EmployeeNode node, int empId) { 
-    	
-    	
-    	
-    	
+    
         /* 1.  Perform the normal BST insertion */
         if (node == null)
             return (new EmployeeNode(empId));
@@ -27,7 +24,7 @@ public class EmpBT {
             node.left = readEmployees(node.left, empId);
         else if (empId > node.empId)
             node.right = readEmployees(node.right, empId);
-        else // Duplicate empIds not allowed 
+        else // Duplicate means employee entering the second time, increment attCount
             node.attCount += 1; 
         
         
@@ -145,67 +142,33 @@ public class EmpBT {
         
         return maxNode;
     }
-    
+
     /***
      * Operation 6 of the Assignment.
      *
      * This function prints the ids in the range id1 to id2 and how often they have entered the organization in a file name output.txt
      * @param emp The Root node of the employee Tree
-     * @param id1 Lower range employee id
-     * @param id2 Upper range of employee id
-     * @return void
+     * @param startValue Lower range employee id
+     * @param endValue Upper range of employee id
      */
-    void printRangePresent (EmployeeNode node, int id1, int id2)
-    {
-    	//System.out.println("Not yet implemented.");
-    	if (node == null){
-    		System.out.println("Node is null");
-    	}
-    	
-    	/*EmployeeNode LowerNode= new node.findLowerNode(node, id1);
-    	
-    	while (id2>=Lowernode.empId))
-    	{
-    		System.out.println("\nEmpId:"+LowerNode.empId + " Attendance Count:"+LowerNode.attCount);
-    		LowerNode = Lowernode.right;
-    	}
-    	if (node.empId != id1) 
-    	{
-    		System.out.println("Found Node:"+ node.empId);
-    		if (id1 < node.empId) // Search in left tree
-                {
-                	System.out.println("Found Node on left tree:"+ node.empId);
-              printRangePresent(node.left, id1, id2);
-              }
-            else if (id1 > node.empId) // Search in right tree
-            {
-            	System.out.println("Found Node on right:"+ node.empId);
-               printRangePresent(node.right, id1, id2);
-            }
-            else if (node.empId == id1)
-            	System.out.println("Found Node real:"+ node.empId); 	
-    	}
-    	*/
-   
-    }
-    
-/*
-    // A utility to find lowerNode
-    EmployeeNode lowerNode(EmployeeNode emp, int id )
-    {
-    	if (emp != null) {
-            if (emp.empId == id)
-                return true;
-            else if (id < emp.empId) // Search in left tree
-              return searchID(emp.left, id);
-            else // Search in right tree
-               return searchID(emp.right, id);
-                     
-        }
-    
-        return emp;
-    }
-*/
+   void printRange(EmployeeNode emp, int startValue, int endValue)
+   {
+       if (emp != null) {
+           if (emp.empId >=startValue && emp.empId <= endValue) {
+               printRange(emp.left, startValue, endValue);
+               System.out.println(emp); //print the node
+               printRange(emp.right, startValue, endValue);
+           }
+           else if (emp.empId > endValue) // Search in left tree
+               printRange(emp.left, startValue, endValue);
+           else if (emp.empId < startValue)// Search in right tree
+               printRange(emp.right, startValue, endValue);
+           else 
+               return;
+
+       }
+       return;
+   }
     // A utility function to get the height of the tree 
     int height(EmployeeNode N) {
         if (N == null)

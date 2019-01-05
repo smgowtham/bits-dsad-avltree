@@ -1,27 +1,23 @@
-/**
- * 
- */
-
-/**
- * @author tvengal
- *
- */
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 import java.text.NumberFormat;
 import java.text.DecimalFormat;
 
+/***
+ * This is the main class that is responsible for reading the files and displays
+ * a menu for various operations that can be performed.
+ */
 public class EmployeeAttendance {
 
+    private static long startTime;
+    private static long endTime ;
+    
+    private static NumberFormat formatter = new DecimalFormat("#0.00000");
+
     public static void main(String[] args) throws IOException {
-    	// Steps to calculate the time
-    	 NumberFormat formatter = new DecimalFormat("#0.00000");
-    	long startTime = System.nanoTime();
-    	long endTime ;
-    	long totalTime;
-    	
-        File file = new File("C://Users//tvengal.ORADEV//workspace//DSAD-1//src/input4.txt");
+
+        File file = new File("./avltree/src/input5.txt");
         Scanner sc = new Scanner(file);
         
         EmpBT employeeTree = new EmpBT();
@@ -40,7 +36,7 @@ public class EmployeeAttendance {
 //            System.out.println("Inserting Node: " + employeeId);
                        
         }
-//        System.out.println("Pre-order traversal" + " of constructed tree is : ");
+        
         loop: while(true) {
         	
         	System.out.println("\n*****************************");
@@ -60,9 +56,6 @@ public class EmployeeAttendance {
             try {
                 int inputChoice = getInput();
 
-            /*    if (inputChoice == -1)
-                    inputChoice = Integer.parseInt(sc.nextLine()); */
-
                 int searchId = 0;
                 switch (inputChoice) {
                 case 0:
@@ -70,110 +63,70 @@ public class EmployeeAttendance {
                     break loop;
                 case 1:
                     System.out.println("In-order traversal of tree:");
-                    
-                	startTime = System.nanoTime();
-                	
-                	//System.out.println("Timer task started at:"+startTime);
+
+                    recordStartTime();
                     employeeTree.inOrder(employeeTree.root);
-                    endTime = System.nanoTime();
-                	totalTime = endTime - startTime;
-                	//System.out.println("Timer task finished at:"+ endTime);
-                	System.out.println("\nTotal Duration for printTree() execution:" + formatter.format(totalTime/1000d)+" milliseconds");
-                    
-                	
+                    recordEndTime();
+
                     break;
                 case 2:
-                	startTime = System.nanoTime();
+                    recordStartTime();
                 	System.out.println("Number of employees in org: " + employeeTree.getHeadcount(employeeTree.root));
-                    endTime = System.nanoTime();
-                	totalTime = endTime - startTime;
-                	//System.out.println("Timer task finished at:"+ endTime);
-                	System.out.println("\nTotal Duration for getHeadCount() execution:" + formatter.format(totalTime/1000d)+" milliseconds");
-                    
+                	recordEndTime();
                     break;
                 case 3:
                     System.out.println("Enter the employee Id to Search:");
                     searchId = getInput();
-                    startTime = System.nanoTime();
-                    if (employeeTree.searchID(employeeTree.root, searchId))
-                    {
+                    recordStartTime();
+                    if (employeeTree.searchID(employeeTree.root, searchId)) {
                         System.out.println("Employee Id: " + searchId + " is Present today.");
-                    	endTime = System.nanoTime();
-                    	totalTime = endTime - startTime;
-                    	//System.out.println("Timer task finished at:"+ endTime);
-                    	System.out.println("\nTotal Duration for searchId() execution:" + formatter.format(totalTime/1000d)+" milliseconds");
-                }
-                    else
-                    {
-                        System.out.println("Employee Id: " + searchId + " is  not Present today.");
-                    		endTime = System.nanoTime();
-                    		totalTime = endTime - startTime;
-                    		//System.out.println("Timer task finished at:"+ endTime);
-                    		System.out.println("\nTotal Duration for printTree() execution:" + formatter.format(totalTime/1000d)+" milliseconds");
                     }
-                 
+                    else {
+                        System.out.println("Employee Id: " + searchId + " is  not Present today.");
+                    }
+                    recordEndTime();
                     break;
                 case 4:
                     System.out.println("Enter the employee Id to search how often:");
                     searchId = getInput();
-                    startTime = System.nanoTime();
+                    
+                    recordStartTime();
                     int numberOfTimes = employeeTree.howOften(employeeTree.root, searchId);
-                    if (numberOfTimes == 0)
-                    {
+                    if (numberOfTimes == 0) {
                         System.out.println("Employee Id: " + searchId + " has not entered the office today");
-                    	endTime = System.nanoTime();
-                		totalTime = endTime - startTime;
-                		//System.out.println("Timer task finished at:"+ endTime);
-                		System.out.println("\nTotal Duration for searchId() execution:" + formatter.format(totalTime/1000d)+" milliseconds");
                     }
-                    else
-                    {
+                    else {
                         System.out.println("Employee Id: " + searchId + " has entered the office" + numberOfTimes + " times");
-                    	endTime = System.nanoTime();
-                    	totalTime = endTime - startTime;
-                    	//System.out.println("Timer task finished at:"+ endTime);
-                    	System.out.println("\nTotal Duration for searchId() execution:" + formatter.format(totalTime/1000d)+" milliseconds");
                     }
+                    recordEndTime();
                     break;
                 case 5:
-                	startTime = System.nanoTime();
+                    recordStartTime();
                 	EmployeeNode frequentVisitor = employeeTree.frequentVisitor(employeeTree.root);
                     if (frequentVisitor == null)
                         System.out.println("Tree is empty");
-                    else
-                    {
+                    else {
                     	System.out.println("Frequent visitor employee id: " + frequentVisitor.empId + " has entered " + frequentVisitor.attCount + " times");
-                       	endTime = System.nanoTime();
-                    	totalTime = endTime - startTime;
-                    	//System.out.println("Timer task finished at:"+ endTime);
-                    	System.out.println("\nTotal Duration for frequentVisitor() execution:" + formatter.format(totalTime/1000d)+" milliseconds");
                     }
+                    recordEndTime();
                     break;
-                case 6:
+                case 6: 
+                    System.out.println("Enter the employee Id for lower Range id:");
+                    int startValue = getInput();
+                    System.out.println("Enter the employee Id for upper Range id:");
+                    int endValue = getInput();
                     
-                
-                 System.out.println("Enter the employee Id for lower Range id:");
-                    int id1 = getInput();
-                   System.out.println("Enter the employee Id for upper Range id:");
-                    int id2 = getInput();
-                   if (id1>id2) //compare lower range is lower than upper range
-                   {
-                   System.out.println("Error: Range entry not valid. Please make sure that lower range is lower than upper range.");
-                   break; //break out of option 6
-                   }
-                  startTime = System.nanoTime(); //gets start time of method call
-                   
-                  employeeTree.printRangePresent(employeeTree.root, id1, id2);
-                   
-                   endTime = System.nanoTime();
-               	   totalTime = endTime - startTime;
-               	//System.out.println("Timer task finished at:"+ endTime);
-               	System.out.println("\nTotal Duration for printRangePesent() execution:" + formatter.format(totalTime/1000d)+" milliseconds");
+                    if(startValue > endValue) //Invalid input 
+                     System.out.println("Invalid range. Start value should be less than end value");
+                    
+                    recordStartTime();
+                    employeeTree.printRange(employeeTree.root, startValue, endValue);
+                    recordEndTime();
+                    
                 break;
-                
                 default:
                     System.out.println("Invalid Input. Enter a value between 0 and 6");
-                    break;
+                break;
                 }
             }// End of try
             catch(NumberFormatException e)
@@ -184,14 +137,23 @@ public class EmployeeAttendance {
         } // End of while
     }
     
-    static int getInput() throws NumberFormatException
+    private static int getInput() throws NumberFormatException
     {
-        int input = -1;
         Scanner sc = new Scanner(System.in);
-        
-        input = Integer.parseInt(sc.nextLine());
+        return Integer.parseInt(sc.nextLine());
+    }
 
-        return input;
+    private static void recordStartTime() throws NumberFormatException
+    {
+        startTime = System.nanoTime();;
+//        System.out.println("Timer task started at:"+ startTime);
+    }
+    
+    private static void recordEndTime() throws NumberFormatException
+    {
+        endTime = System.nanoTime();;
+//        System.out.println("Timer completed at:"+ endTime);
+        System.out.println("Time Taken:"+ formatter.format((endTime-startTime)/1000d)+" milliseconds.");
     }
         
 }

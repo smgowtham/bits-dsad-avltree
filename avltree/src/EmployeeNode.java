@@ -40,4 +40,9 @@ public class EmployeeNode {
     public void setRight(EmployeeNode right) {
         this.right = right;
     }
+
+    @Override 
+    public String toString() {
+        return this.empId + "," + this.attCount;
+    }
 }
