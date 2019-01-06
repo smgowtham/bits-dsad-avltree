@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Scanner;
 import java.text.NumberFormat;
 import java.text.DecimalFormat;
@@ -107,7 +108,10 @@ public class EmployeeAttendance {
                      System.out.println("Invalid range. Start value should be less than end value");
                     
                     recordStartTime();
+                    employeeTree.setfileWriter(new PrintWriter("output.txt", "UTF-8"));
                     employeeTree.printRange(employeeTree.root, startValue, endValue);
+                    employeeTree.closefileWriter();
+                    
                     recordEndTime();
                 break;
                 case 7:

@@ -1,9 +1,23 @@
+import java.io.PrintWriter;
+
 /**
  * This class is the implementation of the Binary tree ADT and its operations.
  * In this case we are using an AVL tree as an Binary tree ADT.
  */
 public class EmpBT {
     EmployeeNode root;
+    
+    private PrintWriter fileWriter;
+    
+    public void setfileWriter(PrintWriter fileWriter) {
+        this.fileWriter = fileWriter;
+    }
+    
+    public void closefileWriter() {
+        System.out.println("Range output written to file "+ System.getProperty("user.dir")+ "output.txt");
+        fileWriter.close();
+    }
+    
 
     /***
      * Operation 1 of the assignment
@@ -158,7 +172,8 @@ public class EmpBT {
        if (emp != null) {
            if (emp.empId >=startValue && emp.empId <= endValue) {
                printRange(emp.left, startValue, endValue);
-               System.out.println(emp); //print the node
+//               System.out.println(emp); //print the node
+               fileWriter.println(emp); //Write the node value to file
                printRange(emp.right, startValue, endValue);
            }
            else if (emp.empId > endValue) // Search in left tree
