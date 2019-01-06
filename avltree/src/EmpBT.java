@@ -14,7 +14,7 @@ public class EmpBT {
     }
     
     public void closefileWriter() {
-        System.out.println("Range output written to file "+ System.getProperty("user.dir")+ "output.txt");
+        System.out.println("Range output written to file "+ System.getProperty("user.dir")+ "/output.txt");
         fileWriter.close();
     }
     
