@@ -1,7 +1,7 @@
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-
-
+/**
+ * This class is the implementation of the Binary tree ADT and its operations.
+ * In this case we are using an AVL tree as an Binary tree ADT.
+ */
 public class EmpBT {
     EmployeeNode root;
 
@@ -16,7 +16,7 @@ public class EmpBT {
      */
     EmployeeNode readEmployees(EmployeeNode node, int empId) { 
     
-        /* 1.  Perform the normal BST insertion */
+        /* If no nodes in tree (Root is null), Insert the a new node and return */
         if (node == null)
             return (new EmployeeNode(empId));
 
@@ -28,43 +28,45 @@ public class EmpBT {
             node.attCount += 1; 
         
         
-        /* 2. Update height of this ancestor node */
+        /* Get height of the ancestor node */
         node.height = 1 + max(height(node.left),
                 height(node.right)); 
   
-        /* 3. Get the balance factor of this ancestor 
-              node to check whether this node became 
-              unbalanced */
+        /* Get balance of this ancestor node to check if tree became unbalanced due to addition*/
         int balance = getBalance(node);
 
-        // If this node becomes unbalanced, then there 
-        // are 4 cases Left Left Case 
+        // If ancestor node is unbalanced then tree needs to be balanced
+        // Balance using one of the 4 possible rotatios
+        // Left Left Rotation 
         if (balance > 1 && empId < node.left.empId)
             return rightRotate(node);
 
-        // Right Right Case 
+        // Right Right Rotation 
         if (balance < -1 && empId > node.right.empId)
             return leftRotate(node);
 
-        // Left Right Case 
+        // Left Right Rotation 
         if (balance > 1 && empId > node.left.empId) {
             node.left = leftRotate(node.left);
             return rightRotate(node);
         }
 
-        // Right Left Case 
+        // Right Left Rotation 
         if (balance < -1 && empId < node.right.empId) {
             node.right = rightRotate(node.right);
             return leftRotate(node);
         } 
-        
-       
-    	/* return the (unchanged) node pointer */
+    
+    		/* Return the node pointer. */
         return node;
     }
 
     /**
      * Operation 2 in assignment.
+     * 
+     * 
+     * @param emp The root node of the tree
+     * @return The number of employees that entered the organization, 0 if none.
      */
     int getHeadcount(EmployeeNode emp) {
         if (emp == null)
@@ -232,7 +234,7 @@ public class EmpBT {
     // The function also prints number of occurrences of every node 
     void preOrder(EmployeeNode node) {
         if (node != null) {
-            System.out.println("\nEmpId:"+node.empId + " Attendance Count:"+node.attCount);
+            System.out.println(node);
             preOrder(node.left);
             preOrder(node.right);
         }
@@ -244,7 +246,7 @@ public class EmpBT {
     void inOrder(EmployeeNode node) {
         if (node != null) {
         	inOrder(node.left);
-        	System.out.println("\nEmpId:"+node.empId + " Attendance Count:"+node.attCount);
+        	System.out.println(node);
             inOrder(node.right);
         }
     }
