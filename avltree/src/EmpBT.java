@@ -200,7 +200,6 @@ public class EmpBT {
     }
 
     // A utility function to right rotate subtree rooted with y 
-    // See the diagram given above. 
     EmployeeNode rightRotate(EmployeeNode y) {
         EmployeeNode x = y.left;
         EmployeeNode T2 = x.right;
@@ -218,7 +217,6 @@ public class EmpBT {
     }
 
     // A utility function to left rotate subtree rooted with x 
-    // See the diagram given above. 
     EmployeeNode leftRotate(EmployeeNode x) {
         EmployeeNode y = x.right;
         EmployeeNode T2 = y.left;
