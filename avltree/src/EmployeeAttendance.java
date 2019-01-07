@@ -84,7 +84,7 @@ public class EmployeeAttendance {
                         System.out.println("Employee Id: " + searchId + " has not entered the office today");
                     }
                     else {
-                        System.out.println("Employee Id: " + searchId + " has entered the office" + numberOfTimes + " times");
+                        System.out.println("Employee Id: " + searchId + " has entered the office " + numberOfTimes + " times");
                     }
                     recordEndTime();
                     break;
@@ -168,7 +168,7 @@ public class EmployeeAttendance {
     {
         endTime = System.nanoTime();;
 //        System.out.println("Timer completed at:"+ endTime);
-        System.out.println("Time Taken:"+ formatter.format((endTime-startTime)/1000000d)+" milliseconds.");
+//        System.out.println("Time Taken:"+ formatter.format((endTime-startTime)/1000000d)+" milliseconds.");
     }
     
     private static Scanner readFile()
@@ -200,4 +200,3 @@ public class EmployeeAttendance {
     }
         
 }
-
