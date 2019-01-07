@@ -1,14 +1,13 @@
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.io.PrintWriter;
 
-
+/**
+ * This class is the implementation of the Binary tree ADT and its operations.
+ * In this case we are using an AVL tree as an Binary tree ADT.
+ */
 public class EmpBT {
     EmployeeNode root;
-   private PrintWriter fileWriter;
+    
+    private PrintWriter fileWriter;
     
     public void setfileWriter(PrintWriter fileWriter) {
         this.fileWriter = fileWriter;
@@ -18,6 +17,8 @@ public class EmpBT {
         System.out.println("Range output written to file "+ System.getProperty("user.dir")+ "/output.txt");
         fileWriter.close();
     }
+    
+
     /***
      * Operation 1 of the assignment
      *
@@ -29,7 +30,7 @@ public class EmpBT {
      */
     EmployeeNode readEmployees(EmployeeNode node, int empId) { 
     
-        /* 1.  Perform the normal BST insertion */
+        /* If no nodes in tree (Root is null), Insert the a new node and return */
         if (node == null)
             return (new EmployeeNode(empId));
 
@@ -39,44 +40,47 @@ public class EmpBT {
             node.right = readEmployees(node.right, empId);
         else // Duplicate means employee entering the second time, increment attCount
             node.attCount += 1; 
-               
-        /* 2. Update height of this ancestor node */
+        
+        
+        /* Get height of the ancestor node */
         node.height = 1 + max(height(node.left),
                 height(node.right)); 
   
-        /* 3. Get the balance factor of this ancestor 
-              node to check whether this node became 
-              unbalanced */
+        /* Get balance of this ancestor node to check if tree became unbalanced due to addition*/
         int balance = getBalance(node);
 
-        // If this node becomes unbalanced, then there 
-        // are 4 cases Left Left Case 
+        // If ancestor node is unbalanced then tree needs to be balanced
+        // Balance using one of the 4 possible rotatios
+        // Left Left Rotation 
         if (balance > 1 && empId < node.left.empId)
             return rightRotate(node);
 
-        // Right Right Case 
+        // Right Right Rotation 
         if (balance < -1 && empId > node.right.empId)
             return leftRotate(node);
 
-        // Left Right Case 
+        // Left Right Rotation 
         if (balance > 1 && empId > node.left.empId) {
             node.left = leftRotate(node.left);
             return rightRotate(node);
         }
 
-        // Right Left Case 
+        // Right Left Rotation 
         if (balance < -1 && empId < node.right.empId) {
             node.right = rightRotate(node.right);
             return leftRotate(node);
         } 
-       	/* return the (unchanged) node pointer */
+    
+    		/* Return the node pointer. */
         return node;
     }
 
     /**
-     * Operation 2 in assignment. 
-     * To get the number of employees attended today
-     * @param emp The Root node of the employee Tree
+     * Operation 2 in assignment.
+     * 
+     * 
+     * @param emp The root node of the tree
+     * @return The number of employees that entered the organization, 0 if none.
      */
     int getHeadcount(EmployeeNode emp) {
         if (emp == null)
@@ -87,8 +91,7 @@ public class EmpBT {
       }
 
     /***
-     * Operation 3 of the assignment 
-     * To find whether an Employee is present today.
+     * Operation 3 of the assignment.
      * 
      * @param emp The Root node of the employee Tree
      * @param id The Employee Id to search
@@ -111,8 +114,8 @@ public class EmpBT {
 
     /***
      * Operation 4 of the Assignment.
-     * Search how often an employee enters the org or office
      * 
+     * Search how often an employee enters the org or office
      * @param emp The Root node of the employee Tree
      * @param id The Employee Id to search
      * @return The number of time the employee enters
@@ -131,8 +134,8 @@ public class EmpBT {
 
     /***
      * Operation 5 of the Assignment.
-     * Search Most Frequent Visitor employee of the org
-     * 
+     *
+     * Search frequentVisitor employee of the org
      * @param emp The Root node of the employee Tree
      * @return The number of time the employee enters
      */
@@ -142,6 +145,7 @@ public class EmpBT {
             return null;
 
         EmployeeNode maxNode = emp;
+
         EmployeeNode leftMaxNode = frequentVisitor(emp.left);
         EmployeeNode rightMaxNode = frequentVisitor(emp.right);
 
@@ -163,17 +167,13 @@ public class EmpBT {
      * @param startValue Lower range employee id
      * @param endValue Upper range of employee id
      */
-
-  void printRange(EmployeeNode emp, int startValue, int endValue)
+   void printRange(EmployeeNode emp, int startValue, int endValue)
    {
-	   try //try for fileWriter case
-	   {
-		   		   	   
        if (emp != null) {
            if (emp.empId >=startValue && emp.empId <= endValue) {
                printRange(emp.left, startValue, endValue);
-               System.out.println(emp); //print the empId along with attCount
-               fileWriter.println(emp); //Write the empId along with attCount
+//               System.out.println(emp); //print the node
+               fileWriter.println(emp); //Write the node value to file
                printRange(emp.right, startValue, endValue);
            }
            else if (emp.empId > endValue) // Search in left tree
@@ -182,15 +182,10 @@ public class EmpBT {
                printRange(emp.right, startValue, endValue);
            else 
                return;
+
        }
-       
-       		}catch (Exception e){
-       			e.printStackTrace();
-       		   }
        return;
    }
- 
-    	   
     // A utility function to get the height of the tree 
     int height(EmployeeNode N) {
         if (N == null)
@@ -205,6 +200,7 @@ public class EmpBT {
     }
 
     // A utility function to right rotate subtree rooted with y 
+    // See the diagram given above. 
     EmployeeNode rightRotate(EmployeeNode y) {
         EmployeeNode x = y.left;
         EmployeeNode T2 = x.right;
@@ -221,7 +217,8 @@ public class EmpBT {
         return x;
     }
 
-    // A utility function to left rotate subtree rooted with x  
+    // A utility function to left rotate subtree rooted with x 
+    // See the diagram given above. 
     EmployeeNode leftRotate(EmployeeNode x) {
         EmployeeNode y = x.right;
         EmployeeNode T2 = y.left;
@@ -247,22 +244,24 @@ public class EmpBT {
     }
 
 
-    // A utility function to print preorder traversal of the tree. 
+    // A utility function to print preorder traversal 
+    // of the tree. 
     // The function also prints number of occurrences of every node 
     void preOrder(EmployeeNode node) {
         if (node != null) {
-            System.out.println("\nEmpId:"+node.empId + " Attendance Count:"+node.attCount);
+            System.out.println(node);
             preOrder(node.left);
             preOrder(node.right);
         }
     }
     
-    // A utility function to print Inorder traversal of the tree. 
+    // A utility function to print Inorder traversal 
+    // of the tree. 
     // The function also prints number of occurrences of  every node 
     void inOrder(EmployeeNode node) {
         if (node != null) {
         	inOrder(node.left);
-        	System.out.println("\nEmpId:"+node.empId + " Attendance Count:"+node.attCount);
+        	System.out.println(node);
             inOrder(node.right);
         }
     }

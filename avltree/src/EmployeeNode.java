@@ -1,3 +1,7 @@
+/**
+ * This class represents a node in the binary tree.
+ * In this case, an employee node, which contains the employeeId and the attCount.
+ */
 public class EmployeeNode {
     public int empId, attCount;
     public int height;
