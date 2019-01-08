@@ -1,0 +1,29 @@
+Performance Analysis of Assignment -PS1 [ATTENDENCE PROBLEM}
+=============================================================
+Submitted by Gowtham N, Goldy M.A, Vengal O. G. T 
+DSAD_BLR_B1_G1_SUBGROUP_2
+-------------------------------------------------------------
+
+
+Assuming an input size 'n'. 
+
+Performance analysis(Running Times) in terms of asymptotic notation is as follows:
+
+The implementation of this problem was done using an AVL-binary tree. The reason for selecting AVL tree is due to the fact that AVL tree has worst case time complexity of O(log n) for searching in comparison to standard Binary tree and BST. This implementation uses the recursive BST insert to insert a new node. In the recursive BST insert, after insertion, we get pointers to all ancestors one by one in a bottom-up manner. The rotation operations (left and right rotate) take constant time as only a few  pointers are being changed there. Updating the height and getting the balance factor also takes constant time. So the time complexity of AVL insert remains same as BST insert which is O(h) where h is the height of the tree. Since AVL tree is balanced, the height is O(log n). So time complexity of AVL insert is also O(log n) but in worst case it can be O(n).
+
+ 
+
+1. How many employees came today?
+Ans: This query uses the method getHeadcount(). This counts the number of unique employee ID's in the tree which is the total count of nodes in tree. The complexity of operation is O(log n) since the total operation is 2^h and h=log n.
+
+2. Did a particular employee come today?
+Ans: This query uses the method searchID(). This searches for an employees in the binary tree.The complexity of operation is O(log n) since this is a standard AVL tree binary search.
+
+3. How often did an employee enter into the office?
+Ans: This query uses the method howOften(). This searches for a specific employee in the binary tree. The complexity of operation is O(log n) since this is a standard AVL tree binary search.
+
+4. Which employee moves out of office most number of times?
+Ans: This query uses the method frequentVisitor(). This searches the entire tree  for the highest value of number of visits and then report. The time complexity for operation is O(n) since it has to traverse through entire tree nodes to find the highest value of the variable in the node.
+
+5. Who all came within a range of IDs, and how often they entered?
+Ans: This query uses the method printRangePresent(). This searches for the lower id first and then print the range in-order till the larger value. This is a sub-tree of the larger tree and for a tree of full size search, the time complexity is O(n).
