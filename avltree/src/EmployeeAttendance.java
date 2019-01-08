@@ -15,6 +15,7 @@ public class EmployeeAttendance {
     private static long startTime;
     private static long endTime ;
     private static EmpBT employeeTree;
+    private static Scanner fileScanner;
     
     private static NumberFormat formatter = new DecimalFormat("#0.00000");
 
@@ -32,7 +33,7 @@ public class EmployeeAttendance {
                     System.out.println("Thank you for using Employee Attendence Reporting system. Have a good day. Bye!");
                     break loop;
                 case 1:
-                    Scanner fileScanner = readFile();
+                    fileScanner = readFile();
                     
                     if(fileScanner == null) // If file cannot be found reload.
                      continue ;
@@ -58,11 +59,15 @@ public class EmployeeAttendance {
                     recordEndTime();
                     break;
                 case 2:
+                    if(inputNotRead())
+                        continue ;
                     recordStartTime();
                 	System.out.println("Number of employees in org: " + employeeTree.getHeadcount(employeeTree.root));
                 	recordEndTime();
                     break;
                 case 3:
+                    if(inputNotRead())
+                        continue ;
                     System.out.println("Enter the employee Id to Search:");
                     searchId = getIntegerInput();
                     recordStartTime();
@@ -75,6 +80,8 @@ public class EmployeeAttendance {
                     recordEndTime();
                     break;
                 case 4:
+                    if(inputNotRead())
+                        continue ;
                     System.out.println("Enter the employee Id to search how often:");
                     searchId = getIntegerInput();
                     
@@ -89,6 +96,8 @@ public class EmployeeAttendance {
                     recordEndTime();
                     break;
                 case 5:
+                    if(inputNotRead())
+                        continue ;
                     recordStartTime();
                 	EmployeeNode frequentVisitor = employeeTree.frequentVisitor(employeeTree.root);
                     if (frequentVisitor == null)
@@ -98,7 +107,9 @@ public class EmployeeAttendance {
                     }
                     recordEndTime();
                     break;
-                case 6: 
+                case 6:
+                    if(inputNotRead())
+                        continue ;
                     System.out.println("Enter the employee Id for lower Range id:");
                     int startValue = getIntegerInput();
                     System.out.println("Enter the employee Id for upper Range id:");
@@ -110,11 +121,19 @@ public class EmployeeAttendance {
                     recordStartTime();
                     employeeTree.setfileWriter(new PrintWriter("output.txt", "UTF-8"));
                     employeeTree.printRange(employeeTree.root, startValue, endValue);
+                    int numberOfEmployeesFound = employeeTree.getRangeCounter();
+                    if(numberOfEmployeesFound != 0)
+                        System.out.println(numberOfEmployeesFound+ " Employee(s) found. Range output written to file "+ 
+                                System.getProperty("user.dir")+ "/output.txt");
+                    else
+                        System.out.println("No employee id's found within given range");
                     employeeTree.closefileWriter();
                     
                     recordEndTime();
                 break;
                 case 7:
+                    if(inputNotRead())
+                        continue ;
                     System.out.println("In-order traversal of tree:");
 
                     recordStartTime();
@@ -197,6 +216,21 @@ public class EmployeeAttendance {
             System.out.println("File not found at location: "+ filePath);
         }
         return sc;
+    }
+
+    /***
+     * This function determines if input file was read atleast once.
+     * Reading inputs is essential to execute all operations.
+     * 
+     * @return True, If input was never read. 
+     */
+    private static boolean inputNotRead() {
+        if(fileScanner==null){
+            System.out.println("Input file was never read.");
+            System.out.println("Please read inputs using operation 1 before other operations.");
+            return true;
+        }
+        return false;
     }
         
 }

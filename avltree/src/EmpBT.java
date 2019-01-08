@@ -9,12 +9,18 @@ public class EmpBT {
     
     private PrintWriter fileWriter;
     
+    private int rangeCounter;
+    
+    public int getRangeCounter() {
+        return rangeCounter;
+    }
+
     public void setfileWriter(PrintWriter fileWriter) {
         this.fileWriter = fileWriter;
+        rangeCounter = 0;
     }
     
     public void closefileWriter() {
-        System.out.println("Range output written to file "+ System.getProperty("user.dir")+ "/output.txt");
         fileWriter.close();
     }
     
@@ -173,6 +179,7 @@ public class EmpBT {
            if (emp.empId >=startValue && emp.empId <= endValue) {
                printRange(emp.left, startValue, endValue);
 //               System.out.println(emp); //print the node
+               rangeCounter++;
                fileWriter.println(emp); //Write the node value to file
                printRange(emp.right, startValue, endValue);
            }
