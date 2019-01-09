@@ -3,48 +3,24 @@ Performance Analysis of Assignment -PS1 [ATTENDENCE PROBLEM}
 Submitted by Gowtham S M, Goldy M.A, Vengal O. G. T 
 DSAD_BLR_B1_G1_SUBGROUP_2
 -------------------------------------------------------------
+Assuming an input size 'n' and defining the tree height to be ‘h’.
 
-
-Assuming an input size 'n'. 
-
-Performance analysis(Running Times) in terms of asymptotic notation is as follows:
+Performance analysis (Running Times) in terms of asymptotic notation for the data structure is as follows:
 
 The implementation of this problem was done using an AVL tree, which is an Binary tree ADT. 
-The reason for selecting AVL tree is due to the fact that AVL tree (Balanced BST) has worst case time complexity of O(log n) for searching in comparison to standard Binary tree. This is due to the balanced nature of AVL tree where we ensure the maximum difference between the height of left subtree and right subtree from root can be 1 (Else we use rotations to bring the tree to this state).
- This implementation uses the recursive BST insert to insert a new node. In the recursive BST insert, after insertion, we get pointers to all ancestors one by one in a bottom-up manner. The rotation operations (left and right rotate) take constant time as only a few  pointers are being changed there. Updating the height and getting the balance factor also takes constant time. So the time complexity of AVL insert remains same as BST insert which is O(h) where h is the height of the tree. Since AVL tree is balanced, the height is O(log n). So time complexity of AVL insert is also O(log n) but in worst case it can be O(n).
+The reason for selecting AVL tree is due to the fact that AVL tree (Balanced BST) has worst case time complexity of O(log n) for searching in comparison to standard Binary tree. This is due to the balanced nature of AVL tree where we ensure the maximum difference between the height of left subtree and right subtree from root can be 1 (else we will `use rotations to bring the tree to this state).
+ This implementation uses the recursive BST insert to insert a new node. In the recursive BST insert, after insertion, we get pointers to all ancestors one by one in a bottom-up manner. The rotation operations (left and right rotate) take constant time as only a few pointers are changed there. Updating the height and getting the balance factor also takes constant time. So the time complexity of AVL insert remains same as BST insert which is O(h) where h is the height of the tree. Since AVL tree is balanced, the height is O(log n). So time complexity of AVL insert is also O(log n) but in worst case it can be O(n). 
 
- 
+Q1. How many employees came today?
+Ans: This query uses the method getHeadcount(). This method returns the count of unique employee ID's in the tree that is the total count of nodes in the binary tree. The max time complexity of operation is O(1) since the number of employees entering is stored in the class during every insert.
 
-1. How many employees came today?
-Ans: This query uses the method getHeadcount(). This counts the number of unique employee ID's in the tree which is the total count of nodes in tree. 
-The complexity of operation is O(1) since the number of employees entering is stored in the class during every insert.
+Q2. Did a particular employee come today?
+Ans: This query uses the method searchID().  This searches for an employees in the binary tree. The max time complexity of operation is O(log n) since in our AVL tree implementation, the maximum traversal required is the height of the tree. (Any employee ID smaller than a current node's value will be in the left subtree and Any employee ID greater than a current node's value will be in the right subtree). Hence at every node, we decide to traverse left or right depending on the current node's value. This can go maximum up to height of the tree, resulting in worst case complexity of O(log n).
+Q3. How often did an employee enter into the office?
+Ans: This query uses the method howOften(). This searches for a specific employee in the binary tree. The max time complexity of operation is O(log n) since we need to find an employeeId in our AVL tree and we extract the visit count. The reason is same as Q:2 for searching in avl tree.
 
-2. Did a particular employee come today?
-Ans: This query uses the method searchID(). 
-This searches for an employees in the binary tree.
-The complexity of operation is O(log n) since in our AVL tree implementation, the maixmum travesal required is the height of the tree.
-(Any employeeId smaller than a current node's value will be in the left subtree, Any employeeId greater than a current node's value will be in the right subtree).
-Hence at every node, we decide to traverse left or right depending on the current node's value. This can go maximum upto height of the tree, resulting in worst case complexity of O(log n).
-
-
-3. How often did an employee enter into the office?
-Ans: This query uses the method howOften(). This searches for a specific employee in the binary tree. 
-The complexity of operation is O(log n) since we need to find an employeeId in our AVL tree and we extract the visit count.
-The reason is same as 2 for searching in avl tree.
-
-4. Which employee moves out of office most number of times?
-Ans: This query uses the method frequentVisitor(). 
-This searches the entire tree  for the highest value of number of visits and then report. 
-The time complexity for operation is O(n) since it has to traverse through entire tree nodes to find the employee with max visits.
+Q4. Which employee moves out of office most number of times?
+Ans: This query uses the method frequentVisitor().  This searches the entire tree  for the highest value of number of visits and then report.  The max time complexity for operation is O(n) since it has to traverse through entire tree nodes to find the employee with max visits.
 
 5. Who all came within a range of IDs, and how often they entered?
-Ans: This query uses the method printRangePresent(). 
-This starts at the rootnode and checks if the range will exist in the left or right subtree.
-If the current node in within the range, then values of the range can exist in both left or right subtree.
-If the current node value is greater than the end value of range, then it searches only in the left subtree (As we ensure this order during balancing).
-If the current node value is smaller than the start value of range, then it searches only in the right subtree (As we ensure this order during balancing).
-
-Hence on an average, There is a decision taken at every node to search either in left subtree/right subtree.
-Hence the average time complexity is O(log n), as we go down only to height of the tree and not every node. 
-
-However, if the range inputs cover all the values of tree, the time complexity can go to O(n) in worst case.
+Ans: This query uses the method printRangePresent().  This starts at the rootnode and checks if the range will exist in the left or right subtree. If the current node in within the range, then values of the range can exist in either left or right subtree. If the current node value is greater than the end value of range, then it searches only in the left subtree (As we ensure this order during balancing). If the current node value is smaller than the start value of range, then it searches only in the right subtree (As we ensure this order during balancing). Hence, on an average, there is a decision taken at every node to search either in left subtree/right subtree. Hence the average time complexity is O(log n), as we go down only to height of the tree and not every node.  However, if the range inputs cover all the values of tree, the max time complexity can go to O(n) in worst case.
