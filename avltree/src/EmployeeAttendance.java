@@ -62,7 +62,7 @@ public class EmployeeAttendance {
                     if(inputNotRead())
                         continue ;
                     recordStartTime();
-                	System.out.println("Number of employees in org: " + employeeTree.getHeadcount(employeeTree.root));
+                	System.out.println("Number of employees in org: " + employeeTree.getHeadCount());
                 	recordEndTime();
                     break;
                 case 3:

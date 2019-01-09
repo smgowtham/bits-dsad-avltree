@@ -9,8 +9,22 @@ public class EmpBT {
     
     private PrintWriter fileWriter;
     
+    private int headCount;
     private int rangeCounter;
-    
+
+    public EmpBT() {
+        headCount = 0;
+    }
+
+    /**
+     * Operation 2 in assignment.
+     * 
+     * Returns the stored head count that was calculated during readEmployees.
+     */
+    public int getHeadCount() {
+        return headCount;
+    }
+
     public int getRangeCounter() {
         return rangeCounter;
     }
@@ -37,8 +51,10 @@ public class EmpBT {
     EmployeeNode readEmployees(EmployeeNode node, int empId) { 
     
         /* If no nodes in tree (Root is null), Insert the a new node and return */
-        if (node == null)
+        if (node == null) {
+            headCount++;
             return (new EmployeeNode(empId));
+        }
 
         if (empId < node.empId)
             node.left = readEmployees(node.left, empId);
@@ -82,17 +98,17 @@ public class EmpBT {
     }
 
     /**
-     * Operation 2 in assignment.
+     * Alternate way to calculate Operation 2 in assignment by travesal.
      * 
      * 
      * @param emp The root node of the tree
      * @return The number of employees that entered the organization, 0 if none.
      */
-    int getHeadcount(EmployeeNode emp) {
+    int getHeadcountByTravesal(EmployeeNode emp) {
         if (emp == null)
             return 0;
         else
-            return(getHeadcount(emp.left) + 1 + getHeadcount(emp.right));
+            return(getHeadcountByTravesal(emp.left) + 1 + getHeadcountByTravesal(emp.right));
         
       }
 
