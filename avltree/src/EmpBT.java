@@ -65,7 +65,7 @@ public class EmpBT {
         
         
         /* Get height of the ancestor node */
-        node.height = 1 + max(height(node.left),
+        node.height = 1 + findMax(height(node.left),
                 height(node.right)); 
   
         /* Get balance of this ancestor node to check if tree became unbalanced due to addition*/
@@ -209,59 +209,59 @@ public class EmpBT {
        }
        return;
    }
-    // A utility function to get the height of the tree 
-    int height(EmployeeNode N) {
-        if (N == null)
+    // Returns the height of the tree
+    int height(EmployeeNode employeeNode) {
+        if (employeeNode == null)
             return 0;
 
-        return N.height;
+        return employeeNode.height;
     }
 
-    // A utility function to get maximum of two integers 
-    int max(int a, int b) {
-        return (a > b) ? a : b;
+    // Function to compare two integers
+    int findMax(int valueA, int valueB) {
+        return (valueA > valueB) ? valueA : valueB;
     }
 
-    // A utility function to right rotate subtree rooted with y 
-    EmployeeNode rightRotate(EmployeeNode y) {
-        EmployeeNode x = y.left;
-        EmployeeNode T2 = x.right;
+    // RightRotate the given root node. 
+    EmployeeNode rightRotate(EmployeeNode rootNode) {
+        EmployeeNode left = rootNode.left;
+        //Node at the right of left
+        EmployeeNode lrNode = left.right;
 
-        // Perform rotation 
-        x.right = y;
-        y.left = T2;
+        // right rotation
+        left.right = rootNode;
+        rootNode.left = lrNode;
+        // Height values updated after rotation
+        rootNode.height = findMax(height(rootNode.left), height(rootNode.right)) + 1;
+        left.height = findMax(height(left.left), height(left.right)) + 1;
 
-        // Update heights 
-        y.height = max(height(y.left), height(y.right)) + 1;
-        x.height = max(height(x.left), height(x.right)) + 1;
-
-        // Return new root 
-        return x;
+        //root element
+        return left;
     }
 
-    // A utility function to left rotate subtree rooted with x 
-    EmployeeNode leftRotate(EmployeeNode x) {
-        EmployeeNode y = x.right;
-        EmployeeNode T2 = y.left;
+    // LeftRotate the given root node.
+    EmployeeNode leftRotate(EmployeeNode rootNode) {
+        EmployeeNode right = rootNode.right;
+        EmployeeNode rlNode = right.left;
 
-        // Perform rotation 
-        y.left = x;
-        x.right = T2;
+        // Left rotation
+        right.left = rootNode;
+        rootNode.right = rlNode;
 
-        //  Update heights 
-        x.height = max(height(x.left), height(x.right)) + 1;
-        y.height = max(height(y.left), height(y.right)) + 1;
+        // Height values updated after rotation
+        rootNode.height = findMax(height(rootNode.left), height(rootNode.right)) + 1;
+        right.height = findMax(height(right.left), height(right.right)) + 1;
 
-        // Return new root 
-        return y;
+        //root element
+        return right;
     }
 
-    // Get Balance factor of node N 
-    int getBalance(EmployeeNode N) {
-        if (N == null)
+    // Returns the balance value of a Node
+    int getBalance(EmployeeNode node) {
+        if (node == null)
             return 0;
 
-        return height(N.left) - height(N.right);
+        return height(node.left) - height(node.right);
     }
 
 
